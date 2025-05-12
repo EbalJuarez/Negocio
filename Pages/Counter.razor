@@ -1,0 +1,239 @@
+﻿@using Negocio.Clases
+
+@page "/ingreso"
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+
+<PageTitle>Formularios</PageTitle>
+
+<h1>Ingreso de productos</h1>
+
+<EditForm Model="@producto" OnValidSubmit="@Guardar">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <label for="identifier">Nombre de producto: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto.nombre_producto" />
+                <ValidationMessage For="() => producto.nombre_producto" />
+            </div>
+            <div class="col">
+                <label for="identifier">Codigo:  </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto.codigo" />
+                <ValidationMessage For="() => producto.nombre_producto" />
+            </div>
+        </div>
+        <p></p>
+        <div class="row">
+            
+            <div class="col">
+                <label for="identifier">Precio de compra: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto.precio_compra" />
+                <ValidationMessage For="() => producto.precio_compra" />
+            </div>
+            <div class="col">
+                <label for="identifier">Precion de venta: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto.precio_venta" />
+                <ValidationMessage For="() => producto.precio_compra" />
+            </div>
+            <div class="col">
+                <label for="identifier">Unidad de medida: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto.unidad_medida" />
+                <ValidationMessage For="() => producto.unidad_medida" />
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="row mt-3">
+                <div class="col-4">
+                    <label for="productionDate">Fecha de vencimiento: </label>
+                    <InputDate id="productionDate" class="form-control" @bind-Value="producto.fecha_vencimieto" />
+                    <ValidationMessage For="() => producto.fecha_vencimieto" />
+                </div>
+            </div>
+            <div class="col">
+                <label for="description">Descripcion:  </label>
+                <InputTextArea id="description" class="form-control" @bind-Value="producto.descripcion" />
+            </div>
+        </div>
+        <p></p>
+
+        <p></p>
+        <div class="row mt-3 text-center">
+            <div class="col">
+                <button class="btn btn-dark" type="submit">Registrar alimento</button>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+<EditForm Model="@producto2" OnValidSubmit="@Guardar2">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <label for="identifier">Nombre del producto: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto2.nombre_producto" />
+                <ValidationMessage For="() => producto2.nombre_producto" />
+            </div>
+            <div class="col">
+                <label for="identifier">Codigo: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto2.codigo" />
+                <ValidationMessage For="() => producto2.nombre_producto" />
+            </div>
+        </div>
+        <p></p>
+        <div class="row">
+            
+            <div class="col">
+                <label for="identifier">Precio de compra: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto2.precio_compra" />
+                <ValidationMessage For="() => producto2.precio_compra" />
+            </div>
+            <div class="col">
+                <label for="identifier">Precio de venta: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto2.precio_venta" />
+                <ValidationMessage For="() => producto2.precio_compra" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="identifier">Tiempo de garantia (años): </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto2.tiempo_garantia" />
+                <ValidationMessage For="() => producto2.tiempo_garantia" />
+            </div>
+            <div class="col">
+                <label for="identifier">Voltaje de trabajo: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto2.voltaje_trabajo" />
+                <ValidationMessage For="() => producto2.voltaje_trabajo" />
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="description">Descripcion: </label>
+                <InputTextArea id="description" class="form-control" @bind-Value="producto2.descripcion" />
+            </div>
+        </div>
+        <p></p>
+
+        <p></p>
+        <div class="row mt-3 text-center">
+            <div class="col">
+                <button class="btn btn-dark" type="submit">Registrar electronico</button>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+
+<EditForm Model="@producto3" OnValidSubmit="@Guardar3">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <label for="identifier">Nombre del producto: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto3.nombre_producto" />
+                <ValidationMessage For="() => producto3.nombre_producto" />
+            </div>
+            <div class="col">
+                <label for="identifier">Codigo: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto3.codigo" />
+                <ValidationMessage For="() => producto3.nombre_producto" />
+            </div>
+        </div>
+        <p></p>
+        <div class="row">
+           
+            <div class="col">
+                <label for="identifier">Precio de compra: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto3.precio_compra" />
+                <ValidationMessage For="() => producto2.precio_compra" />
+            </div>
+            <div class="col">
+                <label for="identifier">Precio de venta: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto3.precio_venta" />
+                <ValidationMessage For="() => producto3.precio_compra" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="identifier">Editorial: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto3.editorial" />
+                <ValidationMessage For="() => producto3.editorial" />
+            </div>
+            <div class="col">
+                <label for="identifier">Categoria: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto3.categoria" />
+                <ValidationMessage For="() => producto3.categoria" />
+            </div>
+            <div class="col">
+                <label for="identifier">Autor: </label>
+                <InputText id="identifier" class="form-control" @bind-Value="producto3.autor" />
+                <ValidationMessage For="() => producto3.autor" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="description">Descripcion: </label>
+                <InputTextArea id="description" class="form-control" @bind-Value="producto2.descripcion" />
+            </div>
+        </div>
+        <p></p>
+
+        <p></p>
+        <div class="row mt-3 text-center">
+            <div class="col">
+                <button class="btn btn-dark" type="submit">Registrar libro</button>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+@code {
+    private Alimento producto = new Alimento();
+    private Electronico producto2 = new Electronico();
+    private Libro producto3 = new Libro();
+    private List<Producto> Lista_Productos = new List<Producto>();
+
+    private void Guardar()
+    {
+        Lista_Productos.Add(producto);
+        localStorage.SetItem("Registro_Productos", Lista_Productos);
+
+    }
+
+    private void Guardar2()
+    {
+        Lista_Productos.Add(producto2);
+        localStorage.SetItem("Registro_Productos", Lista_Productos);
+
+    }
+
+    private void Guardar3()
+    {
+        Lista_Productos.Add(producto3);
+        localStorage.SetItem("Registro_Productos", Lista_Productos);
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Recuperar la lista de starships desde LocalStorage a una variable var
+        var savedStarships = localStorage.GetItem<List<Producto>>("starships");
+
+        // Validar si la lista fue recuperada correctamente, copiarla a la lista
+        if (savedStarships != null)
+        {
+            Lista_Productos = savedStarships;
+        }
+    }
+}
