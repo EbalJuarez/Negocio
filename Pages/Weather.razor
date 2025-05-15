@@ -1,57 +1,190 @@
 ﻿@page "/weather"
 @inject HttpClient Http
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@using Negocio.Clases
 
-<PageTitle>Weather</PageTitle>
+<PageTitle>Productos: </PageTitle>
 
-<h1>Weather</h1>
+<h1>Productos ingresados</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>Conciertos proximos y sus fechas.</p>
 
-@if (forecasts == null)
+@if (Lista_Productos == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="space-table">
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Codigo</th>
+                        <th>Descripcion</th>
+                        <th>Precio de venta</th>
+                        <th>Precio de compra</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var produ in Lista_Productos)
+                    {
+                        <tr>
+                            <td>@produ.nombre_producto</td>
+                            <td>@produ.codigo</td>
+                            <td>@produ.descripcion</td>
+                            <td>@produ.precio_venta</td>
+                            <td>@produ.precio_compra</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+}
+
+@if (Lista_Alimentos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="space-table">
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Codigo</th>
+                        <th>Descripcion</th>
+                        <th>Precio de venta</th>
+                        <th>Precio de compra</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var produ in Lista_Alimentos)
+                    {
+                        <tr>
+                            <td>@produ.nombre_producto</td>
+                            <td>@produ.codigo</td>
+                            <td>@produ.descripcion</td>
+                            <td>@produ.precio_venta</td>
+                            <td>@produ.precio_compra</td>
+                            <td>@produ.fecha_vencimieto</td>
+                            <td>@produ.unidad_medida</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+}
+
+@if (Lista_Electronicos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="space-table">
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Codigo</th>
+                        <th>Descripcion</th>
+                        <th>Precio de venta</th>
+                        <th>Precio de compra</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var produ in Lista_Electronicos)
+                    {
+                        <tr>
+                            <td>@produ.nombre_producto</td>
+                            <td>@produ.codigo</td>
+                            <td>@produ.descripcion</td>
+                            <td>@produ.precio_venta</td>
+                            <td>@produ.precio_compra</td>
+                            <td>@produ.tiempo_garantia</td>
+                            <td>@produ.voltaje_trabajo</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+}
+
+@if (Lista_Libros == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="space-table">
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Codigo</th>
+                        <th>Descripcion</th>
+                        <th>Precio de venta</th>
+                        <th>Precio de compra</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var produ in Lista_Libros)
+                    {
+                        <tr>
+                            <td>@produ.nombre_producto</td>
+                            <td>@produ.codigo</td>
+                            <td>@produ.descripcion</td>
+                            <td>@produ.precio_venta</td>
+                            <td>@produ.precio_compra</td>
+                            <td>@produ.editorial</td>
+                            <td>@produ.categoria</td>
+                            <td>@produ.autor</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+
+    private List<Producto> Lista_Productos = new List<Producto>();
+    private List<Alimento> Lista_Alimentos = new List<Alimento>();
+    private List<Electronico> Lista_Electronicos = new List<Electronico>();
+    private List<Libro> Lista_Libros = new List<Libro>();
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
-    }
-
-    public class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        // Recuperar la lista de starships desde LocalStorage a una variable var
+        var savedStarships = localStorage.GetItem<List<Producto>>("starships");
+        var savedAlimentos = localStorage.GetItem<List<Alimento>>("starships");
+        var savedElectronicos = localStorage.GetItem<List<Electronico>>("starships");
+        var savedLibros = localStorage.GetItem<List<Libro>>("starships");
+        // Validar si la lista fue recuperada correctamente, copiarla a la lista
+        if (savedStarships != null)
+        {
+            Lista_Productos = savedStarships;
+            Lista_Alimentos = savedAlimentos;
+            Lista_Electronicos = savedElectronicos;
+            Lista_Libros = savedLibros;
+        }
     }
 }
