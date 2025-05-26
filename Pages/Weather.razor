@@ -2,49 +2,13 @@
 @inject HttpClient Http
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
 @using Negocio.Clases
+@inject NavigationManager NavigationManager
 
 <PageTitle>Productos: </PageTitle>
 
 <h1>Productos ingresados</h1>
 
-<p>Conciertos proximos y sus fechas.</p>
-
-@if (Lista_Productos == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <div class="space-table">
-        <div class="table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Codigo</th>
-                        <th>Descripcion</th>
-                        <th>Precio de venta</th>
-                        <th>Precio de compra</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var produ in Lista_Productos)
-                    {
-                        <tr>
-                            <td>@produ.nombre_producto</td>
-                            <td>@produ.codigo</td>
-                            <td>@produ.descripcion</td>
-                            <td>@produ.precio_venta</td>
-                            <td>@produ.precio_compra</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-
-}
+<p>Alimentos</p>
 
 @if (Lista_Alimentos == null)
 {
@@ -62,6 +26,10 @@ else
                         <th>Descripcion</th>
                         <th>Precio de venta</th>
                         <th>Precio de compra</th>
+                        <th>Fecha vencimiento</th>
+                        <th>Unidad de medida</th>
+                        <th>Editar</th>
+                        <th>Borrar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,6 +43,18 @@ else
                             <td>@produ.precio_compra</td>
                             <td>@produ.fecha_vencimieto</td>
                             <td>@produ.unidad_medida</td>
+                            <td>
+                                <button class="btn btn-warning"
+                                        @onclick="@(() => NavigationManager.NavigateTo($"/alimento-editar/{produ.codigo}"))">
+                                    Editar
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger"
+                                        @onclick="@(() => NavigationManager.NavigateTo($"/alimento-borrar/{produ.codigo}"))">
+                                    Borar
+                                </button>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -85,106 +65,19 @@ else
 
 }
 
-@if (Lista_Electronicos == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <div class="space-table">
-        <div class="table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Codigo</th>
-                        <th>Descripcion</th>
-                        <th>Precio de venta</th>
-                        <th>Precio de compra</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var produ in Lista_Electronicos)
-                    {
-                        <tr>
-                            <td>@produ.nombre_producto</td>
-                            <td>@produ.codigo</td>
-                            <td>@produ.descripcion</td>
-                            <td>@produ.precio_venta</td>
-                            <td>@produ.precio_compra</td>
-                            <td>@produ.tiempo_garantia</td>
-                            <td>@produ.voltaje_trabajo</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-
-}
-
-@if (Lista_Libros == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <div class="space-table">
-        <div class="table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Codigo</th>
-                        <th>Descripcion</th>
-                        <th>Precio de venta</th>
-                        <th>Precio de compra</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var produ in Lista_Libros)
-                    {
-                        <tr>
-                            <td>@produ.nombre_producto</td>
-                            <td>@produ.codigo</td>
-                            <td>@produ.descripcion</td>
-                            <td>@produ.precio_venta</td>
-                            <td>@produ.precio_compra</td>
-                            <td>@produ.editorial</td>
-                            <td>@produ.categoria</td>
-                            <td>@produ.autor</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-
-}
 
 @code {
 
-    private List<Producto> Lista_Productos = new List<Producto>();
     private List<Alimento> Lista_Alimentos = new List<Alimento>();
-    private List<Electronico> Lista_Electronicos = new List<Electronico>();
-    private List<Libro> Lista_Libros = new List<Libro>();
 
     protected override async Task OnInitializedAsync()
     {
         // Recuperar la lista de starships desde LocalStorage a una variable var
-        var savedStarships = localStorage.GetItem<List<Producto>>("starships");
-        var savedAlimentos = localStorage.GetItem<List<Alimento>>("starships");
-        var savedElectronicos = localStorage.GetItem<List<Electronico>>("starships");
-        var savedLibros = localStorage.GetItem<List<Libro>>("starships");
+        var savedAlimentos = localStorage.GetItem<List<Alimento>>("Registro_Productos");
         // Validar si la lista fue recuperada correctamente, copiarla a la lista
-        if (savedStarships != null)
+        if (savedAlimentos != null)
         {
-            Lista_Productos = savedStarships;
             Lista_Alimentos = savedAlimentos;
-            Lista_Electronicos = savedElectronicos;
-            Lista_Libros = savedLibros;
         }
     }
 }

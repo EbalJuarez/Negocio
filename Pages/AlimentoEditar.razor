@@ -1,8 +1,8 @@
 ﻿@using Negocio.Clases
 
-@page "/ingreso"
+@page "/alimento-editar/{codigo}"
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
-
+@inject NavigationManager NavigationManager
 <PageTitle>Formularios</PageTitle>
 
 <h1>Ingreso de productos</h1>
@@ -26,7 +26,7 @@
         </div>
         <p></p>
         <div class="row">
-            
+
             <div class="col">
                 <label for="identifier">Precio de compra: </label>
                 <InputText id="identifier" class="form-control" @bind-Value="producto.precio_compra" />
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="row">
-            
+
             <div class="row mt-3">
                 <div class="col-4">
                     <label for="productionDate">Fecha de vencimiento: </label>
@@ -68,16 +68,16 @@
     </div>
 
 </EditForm>
-
 @code {
+    [Parameter]
+    public string? codigo { get; set; }
     private Alimento producto = new Alimento();
-    private List<Alimento> Lista_Alimento = new List<Alimento>();
+    private List<Alimento> Lista_Productos = new List<Alimento>();
 
     private void Guardar()
     {
-        Lista_Alimento.Add(producto);
-        localStorage.SetItem("Registro_Productos", Lista_Alimento);
-
+        localStorage.SetItem("Registro_Productos", Lista_Productos);
+        NavigationManager.NavigateTo("/weather");
     }
 
 
@@ -89,7 +89,8 @@
         // Validar si la lista fue recuperada correctamente, copiarla a la lista
         if (savedStarships != null)
         {
-            Lista_Alimento = savedStarships;
+            Lista_Productos = savedStarships;
+            producto = Lista_Productos.FirstOrDefault(a => a.codigo == codigo);
         }
     }
-}
+}   
